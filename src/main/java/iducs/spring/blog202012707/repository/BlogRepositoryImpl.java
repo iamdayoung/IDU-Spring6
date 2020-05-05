@@ -32,15 +32,14 @@ public class BlogRepositoryImpl implements BlogRepository {
 	public Blog read(Blog blog) {
 		// TODO Auto-generated method stub
 		String sql = "select * from blog where id = ?";
-		//Blog retBlog = jdbcTemplate.queryForObject(sql, blog.getId(), new RowMapper());
-		return null;
+		Blog retBlog = jdbcTemplate.queryForObject(sql, new Object[]{blog.getId()}, new BeanPropertyRowMapper<Blog>(Blog.class));
+		return retBlog;
 	}
 
 	@Override
 	public List<Blog> readList() {
 		// TODO Auto-generated method stub
 		String sql = "select * from blog order by id desc";
-		
 		List<Blog> blogList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Blog>(Blog.class));
 		return blogList;
 	}

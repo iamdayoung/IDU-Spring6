@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import iducs.spring.blog202012707.domain.Blog;
@@ -32,13 +33,13 @@ public class BlogController {
 	}
 		
 	@GetMapping("/blogs/{id}")
-	public String getblog(@RequestParam(name="name", required=false, defaultValue="getList") String name, Model model) {
-		model.addAttribute("name", name);
-		return "/blogs/get-blog";		
+	public String getblog(@PathVariable("id") long id, Model model) {
+		model.addAttribute("blog", blogService.getBlog(id));
+		return "/blogs/get-blog";
 	}
 	
 	@PostMapping("/blogs")
-	public String postBlog(@Valid Blog blog, Model model) {
+	public String postBlog(@RequestBody @Valid Blog blog, Model model) {
 		blogService.postBlog(blog);
 		return "redirect:/blogs/all";
 	}
